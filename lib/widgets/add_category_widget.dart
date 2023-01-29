@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_admin_app/repository/provider_repository.dart';
 
 class AddCategoryWidget extends StatefulWidget {
   const AddCategoryWidget({super.key});
@@ -10,6 +11,7 @@ class AddCategoryWidget extends StatefulWidget {
 class _AddCategoryWidgetState extends State<AddCategoryWidget> {
   Color primaryColor = Colors.blue;
   Map<String, dynamic> _dataCategories = {};
+  TextEditingController categoryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,17 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
           shrinkWrap: true,
           children: [
             TextFormField(
+              controller: categoryController,
               decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () async {
+                    final cc = ProviderRepository();
+                    var dd = categoryController.text;
+                    cc.addCategory(dd);
+                    categoryController.clear();
+                  },
+                  icon: const Icon(Icons.keyboard_arrow_right_outlined),
+                ),
                 label: const Text('Введите название категории'),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
