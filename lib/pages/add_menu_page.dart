@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meal_admin_app/widgets/add_category_widget.dart';
 
+import 'add_meal_page.dart';
+
 class AddMenuPage extends StatefulWidget {
   const AddMenuPage({super.key});
 
@@ -23,27 +25,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Center(
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  setState(() {
-                    textFields++;
-                  });
-                },
-                icon: const Icon(Icons.add_circle_outline),
-                label: const Text('Добавить Категорию'),
-              ),
-            ),
-            ListView(
-              shrinkWrap: true,
-              children: List.generate(
-                growable: true,
-                textFields,
-                (index) {
-                  return AddCategoryWidget();
-                },
-              ),
-            ),
+            const AddCategoryWidget(),
           ],
         ),
       ),

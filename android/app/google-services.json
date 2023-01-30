@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "292337041294",
+    "firebase_url": "https://meal-admin-app-default-rtdb.firebaseio.com",
+    "project_id": "meal-admin-app",
+    "storage_bucket": "meal-admin-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292337041294:android:a21e6ff4ae6e93d30eaedf",
+        "android_client_info": {
+          "package_name": "com.example.meal_admin_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292337041294-9h5d3igpq5joeu2g796s3jut9jo66s4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEyFCG1dzEsxkRhDEXN2mSiBoJtLfNq50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292337041294-9h5d3igpq5joeu2g796s3jut9jo66s4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

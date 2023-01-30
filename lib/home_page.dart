@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_admin_app/pages/add_meal_page.dart';
 
 import 'pages/about_cafe_page.dart';
 import 'pages/add_menu_page.dart';
@@ -22,7 +23,8 @@ class HomePage extends StatelessWidget {
         child: ListView(
           shrinkWrap: true,
           children: [
-            TextButton(
+            OutlinedButton.icon(
+              icon: const Icon(Icons.add_home_outlined),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -31,7 +33,7 @@ class HomePage extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text(
+              label: const Text(
                 'О Заведении',
               ),
             ),
@@ -44,8 +46,19 @@ class HomePage extends StatelessWidget {
                   ),
                 );
               },
-              icon: const Icon(Icons.add_business_outlined),
-              label: const Text('Добавить Меню'),
+              icon: const Icon(Icons.menu_book),
+              label: const Text('Добавить Категории блюд'),
+            ),
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddMealPage(),
+                    ));
+              },
+              icon: const Icon(Icons.food_bank_outlined),
+              label: const Text('Добавить Блюда'),
             ),
           ],
         ),
