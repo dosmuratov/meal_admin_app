@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_admin_app/widgets/add_meal_widget.dart';
 
 import '../widgets/meal_list_widget.dart';
 import '../widgets/upload_images_widget.dart';
@@ -12,12 +13,24 @@ class AddMealPage extends StatefulWidget {
 
 class _AddMealPageState extends State<AddMealPage> {
   Color primaryColor = Colors.blue;
-  TextEditingController mealController = TextEditingController();
+  bool toAddMeal = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Добавить блюдо')),
+      appBar: AppBar(
+        title: const Text('Добавить блюдо'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                toAddMeal = !toAddMeal;
+              });
+            },
+            icon: const Icon(Icons.format_list_bulleted_add),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
@@ -31,41 +44,7 @@ class _AddMealPageState extends State<AddMealPage> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  child: TextFormField(
-                    controller: mealController,
-                    decoration: InputDecoration(
-                      label: const Text('Название блюда'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10.0,
-                    bottom: 10.0,
-                  ),
-                  child: TextFormField(
-                    controller: mealController,
-                    decoration: InputDecoration(
-                      label: const Text('Описание блюда'),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const UploadImagesWidget(),
-                // const MealListWidget(),
+                toAddMeal ? AddMealWidget() : MealListWidget(),
               ],
             ),
           ),

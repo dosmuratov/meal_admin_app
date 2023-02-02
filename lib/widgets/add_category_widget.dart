@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:meal_admin_app/repository/provider_repository.dart';
-import 'package:meal_admin_app/widgets/category_list_widget.dart';
 
 class AddCategoryWidget extends StatefulWidget {
-  const AddCategoryWidget({super.key});
+  const AddCategoryWidget({
+    super.key,
+    required this.isDone,
+  });
+  final ValueChanged<bool> isDone;
 
   @override
   State<AddCategoryWidget> createState() => _AddCategoryWidgetState();
@@ -12,8 +15,6 @@ class AddCategoryWidget extends StatefulWidget {
 class _AddCategoryWidgetState extends State<AddCategoryWidget> {
   Color primaryColor = Colors.blue;
   TextEditingController categoryController = TextEditingController();
-  ProviderRepository providerRepository = ProviderRepository();
-  String inputData = '';
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +36,9 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                     onPressed: () {
-                      inputData = categoryController.text;
-                      providerRepository.addCategory(inputData);
+                      ProviderRepository().addCategory(categoryController.text);
                       categoryController.clear();
+                      widget.isDone(true);
                     },
                     icon: const Icon(Icons.keyboard_arrow_right_outlined),
                   ),
@@ -50,29 +51,6 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                   ),
                 ),
               ),
-              CategoryListWidget(),
-
-              // ListView.builder(
-              //   itemBuilder: (context, index) {},
-              // )
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // OutlinedButton.icon(
-              //   onPressed: () {},
-              //   icon: const Icon(Icons.add),
-              //   label: const Text('Добавить блюдо'),
-              // ),
-              // ListView(
-              //   shrinkWrap: true,
-              //   children: List.generate(
-              //     growable: true,
-              //     _dataCategories.length,
-              //     (index) {
-              //       return ;
-              //     },
-              //   ),
-              // ),
             ],
           ),
         ),

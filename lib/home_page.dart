@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meal_admin_app/pages/add_meal_page.dart';
 
 import 'pages/about_cafe_page.dart';
-import 'pages/add_menu_page.dart';
+import 'pages/add_category_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AddMenuPage(),
+                    builder: (context) => const AddCategoryPage(),
                   ),
                 );
               },
