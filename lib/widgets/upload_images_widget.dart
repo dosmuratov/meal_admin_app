@@ -3,20 +3,15 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:meal_admin_app/repository/provider_repository.dart';
 import 'package:path/path.dart';
 import '../api/firebase_api.dart';
 
 class UploadImagesWidget extends StatefulWidget {
   const UploadImagesWidget({
     super.key,
-    required this.name,
-    required this.description,
-    required this.onSuccess,
+    required this.imageUrl,
   });
-  final String name;
-  final String description;
-  final ValueChanged<bool> onSuccess;
+  final ValueChanged<String> imageUrl;
 
   @override
   State<UploadImagesWidget> createState() => _UploadImagesWidgetState();
@@ -26,6 +21,7 @@ class _UploadImagesWidgetState extends State<UploadImagesWidget> {
   Color primaryColor = Colors.blue;
   File? file;
   UploadTask? task;
+  List<String> addedImages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +51,14 @@ class _UploadImagesWidgetState extends State<UploadImagesWidget> {
             const SizedBox(
               height: 10,
             ),
-            OutlinedButton.icon(
-              onPressed: uploadFile,
-              icon: const Icon(Icons.cloud_upload_outlined),
-              label: const Text('Сохранить'),
-            ),
-            // const MealListWidget(),
+            file != null
+                ? OutlinedButton.icon(
+                    onPressed: uploadFile,
+                    icon: const Icon(Icons.cloud_upload_outlined),
+                    label: const Text('Загрузить'),
+                  )
+                : const Center(),
             task != null ? buildUploadStatus(task!) : Container(),
-            // if ()
           ],
         ),
       ),
@@ -79,6 +75,9 @@ class _UploadImagesWidgetState extends State<UploadImagesWidget> {
 
   Future uploadFile() async {
     if (file == null) return;
+    if (addedImages.contains(file!.path)) {
+      return;
+    }
     final fileName = basename(file!.path);
     final destination = 'files/$fileName';
     task = FirebaseApi.uploadFile(destination, file!);
@@ -87,19 +86,13 @@ class _UploadImagesWidgetState extends State<UploadImagesWidget> {
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
 
-    final result = await ProviderRepository().addMeal({
-      'name': widget.name,
-      'description': widget.description,
-      'imageUrl': urlDownload,
-    });
+    widget.imageUrl(urlDownload);
 
-    print(result);
-    widget.onSuccess(result);
+    addedImages.add(file!.path);
+
     setState(() {
       task = null;
     });
-
-    // print(urlDownload);
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(

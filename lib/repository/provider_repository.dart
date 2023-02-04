@@ -34,12 +34,12 @@ class ProviderRepository {
             json.decode(response.body) as Map<String, dynamic>;
         final List<Categories> loadedCategories = [];
         extractedData.forEach((categoryId, categoryData) {
-          print(categoryData['entries']);
+          // print(categoryData['entries']);
           loadedCategories.add(
             Categories(
               id: categoryId,
               name: categoryData['name'],
-              entries: [Meal.fromJson(categoryData['entries'])],
+              entries: [],
             ),
           );
         });
@@ -85,9 +85,9 @@ class ProviderRepository {
     }
   }
 
-  Future<bool> addMeal(Map<String, dynamic> data) async {
+  Future<bool> addMeal(Map<String, dynamic> data, String id) async {
     String url =
-        'https://meal-admin-app-default-rtdb.firebaseio.com/categories/entries.json';
+        'https://meal-admin-app-default-rtdb.firebaseio.com/categories/$id/entries.json';
 
     try {
       final response = await http.post(

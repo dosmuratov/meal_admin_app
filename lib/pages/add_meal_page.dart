@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:meal_admin_app/widgets/add_meal_widget.dart';
 
 import '../widgets/meal_list_widget.dart';
-import '../widgets/upload_images_widget.dart';
 
 class AddMealPage extends StatefulWidget {
   const AddMealPage({super.key});

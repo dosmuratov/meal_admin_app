@@ -13,56 +13,66 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Административная панель'),
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
-          child: Text(''),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                OutlinedButton.icon(
+                  icon: const Icon(Icons.add_home_outlined),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AboutCafePage(),
+                      ),
+                    );
+                  },
+                  label: const Text(
+                    'О Заведении',
+                  ),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddCategoryPage(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.menu_book),
+                  label: const Text('Добавить Категории блюд'),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddMealPage(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.food_bank_outlined),
+                  label: const Text('Добавить Блюда'),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-      drawer: Drawer(
-        backgroundColor: Colors.white,
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            OutlinedButton.icon(
-              icon: const Icon(Icons.add_home_outlined),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AboutCafePage(),
-                  ),
-                );
-              },
-              label: const Text(
-                'О Заведении',
-              ),
-            ),
-            OutlinedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddCategoryPage(),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.menu_book),
-              label: const Text('Добавить Категории блюд'),
-            ),
-            OutlinedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddMealPage(),
-                    ));
-              },
-              icon: const Icon(Icons.food_bank_outlined),
-              label: const Text('Добавить Блюда'),
-            ),
-          ],
-        ),
-      ),
+      // drawer: Drawer(
+      //   backgroundColor: Colors.white,
+      //   child: ListView(
+      //     shrinkWrap: true,
+      //     children: [
+
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
