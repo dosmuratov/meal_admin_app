@@ -14,54 +14,76 @@ class HomePage extends StatelessWidget {
         title: const Text('Административная панель'),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                OutlinedButton.icon(
-                  icon: const Icon(Icons.add_home_outlined),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AboutCafePage(),
-                      ),
-                    );
-                  },
-                  label: const Text(
-                    'О Заведении',
-                  ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Positioned(
+              top: 100,
+              right: 50,
+              left: 50,
+              child: OutlinedButton.icon(
+                icon: const Icon(Icons.add_home_outlined, size: 30),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AboutCafePage(),
+                    ),
+                  );
+                },
+                label: const Text(
+                  'О Заведении',
+                  style: TextStyle(fontSize: 15),
                 ),
-                OutlinedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddCategoryPage(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.menu_book),
-                  label: const Text('Добавить Категории блюд'),
-                ),
-                OutlinedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddMealPage(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.food_bank_outlined),
-                  label: const Text('Добавить Блюда'),
-                ),
-              ],
+              ),
             ),
-          ),
+            Positioned(
+              top: 200,
+              right: 50,
+              left: 50,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddCategoryPage(),
+                    ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.menu_book,
+                  size: 30,
+                ),
+                label: const Text(
+                  'Добавить Категории блюд',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 300,
+              right: 50,
+              left: 50,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddMealPage(),
+                    ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.food_bank_outlined,
+                  size: 30,
+                ),
+                label: const Text(
+                  'Добавить Блюда',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       // drawer: Drawer(

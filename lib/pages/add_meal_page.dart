@@ -30,25 +30,7 @@ class _AddMealPageState extends State<AddMealPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: primaryColor,
-            ),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                toAddMeal ? AddMealWidget() : MealListWidget(),
-              ],
-            ),
-          ),
-        ),
-      ),
+      body: toAddMeal ? const AddMealWidget() : const MealListWidget(),
     );
   }
 }

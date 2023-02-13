@@ -20,7 +20,7 @@ class ProviderRepository {
         }),
       );
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -34,7 +34,6 @@ class ProviderRepository {
             json.decode(response.body) as Map<String, dynamic>;
         final List<Categories> loadedCategories = [];
         extractedData.forEach((categoryId, categoryData) {
-          // print(categoryData['entries']);
           loadedCategories.add(
             Categories(
               id: categoryId,
@@ -50,6 +49,27 @@ class ProviderRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<bool> deleteCategory(String id) async {
+    String url =
+        'https://meal-admin-app-default-rtdb.firebaseio.com/categories/$id.json';
+    try {
+      final response = await http.delete(
+        Uri.parse(
+          url,
+        ),
+      );
+      if (response.statusCode == 200) {
+        true;
+      } else {
+        false;
+      }
+    } catch (e) {
+      rethrow;
+    }
+
+    return true;
   }
 
   Future<bool> addShopInfo(Map<String, dynamic> data) async {
@@ -100,6 +120,40 @@ class ProviderRepository {
         return false;
       }
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Meal>> getMealFromCategoryId(String id) async {
+    String url =
+        'https://meal-admin-app-default-rtdb.firebaseio.com/categories/$id/entries.json';
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final extractedData = json.decode(response.body);
+        final List<Meal> loadedMeals = [];
+        if (extractedData == '') {
+          return loadedMeals;
+        }
+        extractedData.forEach((mealId, mealData) {
+          // print(mealData);
+          loadedMeals.add(
+            Meal(
+              id: mealId,
+              name: mealData['name'] ?? 'Отсутствует',
+              description: mealData['description'] ?? 'Отсутствует',
+              imageUrl: mealData['imageUrl'] ?? '',
+              price:
+                  mealData['price'] == '' ? 'Отсутствует' : mealData['price'],
+            ),
+          );
+        });
+        return loadedMeals;
+      } else {
+        throw 'What happened?';
+      }
+    } catch (e) {
+      print(e);
       rethrow;
     }
   }

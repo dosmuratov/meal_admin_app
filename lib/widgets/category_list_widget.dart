@@ -26,11 +26,39 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               final name = data.elementAt(index).name;
-              final entries = data.elementAt(index).entries;
+              final id = data.elementAt(index).id;
 
               return ListTile(
+                trailing: IconButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        action: SnackBarAction(
+                          label: 'Удалить',
+                          onPressed: () async {
+                            final response =
+                                await ProviderRepository().deleteCategory(id);
+                            if (response) {
+                              ScaffoldMessenger.of(context)
+                                ..clearSnackBars()
+                                ..showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Успешно удалено'),
+                                  ),
+                                );
+                              Navigator.pop(context);
+                            }
+                          },
+                        ),
+                        content: const Text('Вы уверены?'),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.delete_outline,
+                  ),
+                ),
                 title: Text(name),
-                trailing: Text(entries.toString()),
               );
             },
             itemCount: data.length,

@@ -1,5 +1,8 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+
+import '../models/categories.dart';
+import '../repository/provider_repository.dart';
+import 'meal_widget.dart';
 
 class MealListWidget extends StatefulWidget {
   const MealListWidget({super.key});
@@ -9,51 +12,43 @@ class MealListWidget extends StatefulWidget {
 }
 
 class _MealListWidgetState extends State<MealListWidget> {
-  late Future<ListResult> futureFiles;
   Color primaryColor = Colors.blue;
-
-  @override
-  void initState() {
-    super.initState();
-    futureFiles = FirebaseStorage.instance.ref('/files').listAll();
-  }
+  bool isTileOpened = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: primaryColor,
-        ),
-      ),
-      child: FutureBuilder<ListResult>(
-        future: futureFiles,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final files = snapshot.data!.items;
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: files.length,
-              itemBuilder: (context, index) {
-                final file = files[index];
-                return ListTile(
-                  title: Text(file.name),
-                );
-              },
-            );
-          } else if (snapshot.hasError) {
-            return const Center(
-              child: Text('Ошибка'),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
+    Future<List<Categories>> listOfCategories =
+        ProviderRepository().getListCategories();
+
+    return FutureBuilder(
+      future: listOfCategories,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final datas = snapshot.data!;
+          return ListView.builder(
+            primary: false,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final mealId = datas.elementAt(index).id;
+              final mealName = datas.elementAt(index).name;
+              return ExpansionTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(
+                  mealName,
+                ),
+                children: [
+                  MealWidget(categoryId: mealId),
+                ], //MealWidget(categoryId: mealId),
+              );
+            },
+            itemCount: datas.length,
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }
